@@ -1,12 +1,10 @@
 import { useState } from 'react'
+import bcrypt from 'bcryptjs'
+
+const salt = '$2b$10$Lt0PlnYcAuxa8s2QX1iw6.'
 
 export default function Signup({ setToken, setIsUser }) {
-	const [formValues, setFormValues] = useState({ email: '', password: '' })
-
-	const formFields = {
-		email: formValues.email,
-		password: formValues.password,
-	}
+	const [formValues, setFormValues] = useState({ email: '', password: '' })	
 
 	const onChange = (event) => {
 		setFormValues({ ...formValues, [event.target.name]: event.target.value })
@@ -14,6 +12,14 @@ export default function Signup({ setToken, setIsUser }) {
 
 	const handleSubmit = (event) => {
 		event.preventDefault()
+
+    const hashedPassword = bcrypt.hashSync(formValues.password, salt)
+    
+    const formFields = {
+      email: formValues.email,
+      password: hashedPassword,
+    }
+
 		fetch('http://localhost:3001/users', {
 			method: 'POST',
 			headers: {

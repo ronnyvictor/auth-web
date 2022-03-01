@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import Login from './scenes/Login'
 
+import Login from './scenes/Login'
 import Signup from './scenes/Signup'
+import UserList from './scenes/UserList'
 
 export default function App() {
 	const [token, setToken] = useState()
@@ -16,7 +17,7 @@ export default function App() {
 					<Signup setToken={setToken} setIsUser={setIsUser} />
 				)
 			) : (
-				<h1>User List</h1>
+				<UserList token={token} />
 			)}
 		</section>
 	)
